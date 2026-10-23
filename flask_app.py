@@ -1,3 +1,6 @@
+from flask import Flask, render_template, request, redirect, abort, jsonify
+from datetime import datetime
+from zoneinfo import ZoneInfo
 #  Mon premier site Web avec Flask
 # ---------------------------------------------------------------
 #  Ce fichier est le "cerveau" de votre site : c'est lui qui
@@ -6,10 +9,6 @@
 #  Vous allez le compléter petit à petit, exercice après exercice.
 #  Les consignes sont dans le dossier "exercices/".
 # ---------------------------------------------------------------
-
-from flask import Flask, render_template, request, redirect, abort, jsonify
-from datetime import datetime
-from zoneinfo import ZoneInfo
 
 app = Flask(__name__)
 
@@ -83,23 +82,7 @@ def moi():
         langues=request.headers.get("Accept-Language"),
         entetes=request.headers,
     )
-    # 3xx : une redirection
-@app.get("/home")
-def home():
-    return redirect("/")
-
-
-# 4xx : un accès interdit
-@app.get("/secret")
-def secret():
-    abort(403)
-
-
-# Une page d'erreur 404 personnalisée
-@app.errorhandler(404)
-def page_introuvable(erreur):
-    return render_template("404.html"), 404
-
+ 
 @app.get("/api/heure")
 def api_heure():
     maintenant = datetime.now(ZoneInfo("Europe/Paris"))
